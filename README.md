@@ -93,7 +93,7 @@ services:
       - edge
     labels:
       - traefik.enable=true
-      - traefik.http.routers.myapp.rule=Host(`www.accruvi.com`)
+      - traefik.http.routers.myapp.rule=Host(`www.example.com`)
       - traefik.http.routers.myapp.entrypoints=websecure
       - traefik.http.routers.myapp.tls.certresolver=letsencrypt
 
