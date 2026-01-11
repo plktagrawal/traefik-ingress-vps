@@ -42,9 +42,9 @@ chmod 600 platform/infra/traefik/acme/acme.json
 ```bash
 export TRAEFIK_ACME_EMAIL=<youremailaddress>
 ```
-7. Navigate to the Traefik app folder
+7. Navigate to the Traefik app folder in which docker compose file is present.
 ```bash
-cd traefik
+cd traefik-ingress-vps
 ```
 
 8. Run docker compose
