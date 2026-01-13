@@ -1,0 +1,8 @@
+# The .env file in this package does not have any values:
+
+# env file
+.env
+
+# Editor/IDE
+# .idea/
+# .vscode/
