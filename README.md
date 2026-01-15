@@ -101,3 +101,36 @@ networks:
   edge:
     external: true
 ```
+
+## Sample NGINX Docker Compose File for Frontend and Backend Deployment
+Here we assume the frontend is available at `example.com` and the backend is available at `api.backend.com`.
+
+```yaml
+services:
+  web:
+    image: nginx:stable-alpine
+    container_name: myapp_web
+    restart: unless-stopped
+    networks:
+      - edge
+    labels:
+      - traefik.enable=true
+
+      - traefik.http.routers.frontend.rule=Host(`example.com`) || Host(`www.example.com`)
+      - traefik.http.routers.frontend.entrypoints=websecure
+      - traefik.http.routers.frontend.tls.certresolver=letsencrypt
+      - traefik.http.routers.frontend.service=frontend-svc
+
+      - traefik.http.routers.api.rule=Host(`api.example.com`) || Host(`www.api.example.com`)
+      - traefik.http.routers.api.entrypoints=websecure
+      - traefik.http.routers.api.tls.certresolver=letsencrypt
+      - traefik.http.routers.api.service=api-svc
+
+      - traefik.http.services.frontend-svc.loadbalancer.server.port=80
+      - traefik.http.services.api-svc.loadbalancer.server.port=80
+
+networks:
+  edge:
+    external: true
+
+```
