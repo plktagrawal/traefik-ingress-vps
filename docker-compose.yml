@@ -12,6 +12,9 @@ services:
     container_name: traefik
     restart: unless-stopped
 
+    environment:
+      - TZ=Asia/Kolkata
+
     command:
       - "--log.level=INFO"
       - "--providers.docker=true"
@@ -26,6 +29,8 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.letsencrypt.acme.email=${TRAEFIK_ACME_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
+      - --accesslog.fields.names.StartUTC=drop # Drop UTC field
+      - --accesslog.fields.names.StartLocal=keep # Keep Local field
 
     ports:
       - "80:80"
@@ -35,6 +40,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./acme:/etc/traefik/acme
       - ./dynamic:/etc/traefik/dynamic
+      - /etc/localtime:/etc/localtime:ro # Mount host's timezone info
 
     networks:
       - edge
